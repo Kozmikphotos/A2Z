@@ -12,9 +12,7 @@
 
     <style>
 
-        /* ------------------------------
-           GENERAL PAGE
-        ------------------------------ */
+    
 
         * {
             box-sizing: border-box;
@@ -35,9 +33,6 @@
         }
 
 
-        /* ------------------------------
-           PHOTO GRID
-        ------------------------------ */
 
         .gallery {
             display: grid;
@@ -53,7 +48,6 @@
         }
 
 
-        /* Each photo sits inside its own box */
 
         .photo {
             background: darkolivegreen;
@@ -69,8 +63,6 @@
                 box-shadow 0.2s ease;
         }
 
-
-        /* The actual photograph */
 
         .photo img {
             width: 100%;
@@ -92,10 +84,6 @@
         }
 
 
-        /* ------------------------------
-           LIGHTBOX
-        ------------------------------ */
-
         .lightbox {
             display: none;
 
@@ -115,9 +103,6 @@
             justify-content: center;
         }
 
-
-        /* The large photograph */
-
         .lightbox-image {
             max-width: 90%;
             max-height: 90vh;
@@ -133,10 +118,6 @@
                 0 0 30px rgba(0, 0, 0, 0.5);
         }
 
-
-        /* ------------------------------
-           CLOSE BUTTON
-        ------------------------------ */
 
         .close {
             position: absolute;
@@ -161,9 +142,6 @@
         }
 
 
-        /* ------------------------------
-           PREVIOUS / NEXT BUTTONS
-        ------------------------------ */
 
         .prev,
         .next {
@@ -204,11 +182,6 @@
             color: #ccc;
         }
 
-
-        /* ------------------------------
-           PHOTO NUMBER
-        ------------------------------ */
-
         .photo-number {
             position: absolute;
 
@@ -229,10 +202,6 @@
             border-radius: 20px;
         }
 
-
-        /* ------------------------------
-           SMALL SCREENS
-        ------------------------------ */
 
         @media (max-width: 600px) {
 
@@ -286,10 +255,6 @@
 
     <h1>parkrun A-Z</h1>
 
-
-    <!-- =================================
-         PHOTO GALLERY
-         ================================= -->
 
       
     <div class="gallery">
@@ -388,7 +353,7 @@
 
       
         <div class="photo">
-            <img src="./x.jpeg"  " alt="NO X">
+            <img src="./x.jpg"  " alt="NO X">
         </div>
 
         <div class="photo">
@@ -402,9 +367,7 @@
     </div>
 
 
-    <!-- =================================
-         LIGHTBOX
-         ================================= -->
+   
 
     <div class="lightbox" id="lightbox">
 
@@ -438,19 +401,17 @@
 
 
 
-    <!-- =================================
-         JAVASCRIPT
-         ================================= -->
+    
 
     <script>
 
-        /* Get all the photographs */
+       
 
         const photos =
             document.querySelectorAll('.photo img');
 
 
-        /* Get the lightbox elements */
+
 
         const lightbox =
             document.getElementById('lightbox');
@@ -471,14 +432,10 @@
             document.getElementById('photoNumber');
 
 
-        /* Keep track of which photo is being displayed */
-
         let currentPhoto = 0;
 
 
-        /* ---------------------------------
-           OPEN LIGHTBOX
-           --------------------------------- */
+       
 
         function openLightbox(index) {
 
@@ -494,10 +451,6 @@
         }
 
 
-        /* ---------------------------------
-           DISPLAY PHOTO
-           --------------------------------- */
-
         function showPhoto() {
 
             const photo = photos[currentPhoto];
@@ -511,10 +464,7 @@
         }
 
 
-        /* ---------------------------------
-           CLOSE LIGHTBOX
-           --------------------------------- */
-
+       
         function closeLightbox() {
 
             lightbox.style.display = 'none';
@@ -523,9 +473,7 @@
         }
 
 
-        /* ---------------------------------
-           NEXT PHOTO
-           --------------------------------- */
+     
 
         function nextPhoto() {
 

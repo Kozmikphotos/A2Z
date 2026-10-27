@@ -1,612 +1,170 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-
-    <!-- Makes the page responsive on phones and tablets -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Parkrun A-Z</title>
-
-    <style>
-
-    
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            padding: 25px;
-            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-            color: rgb(85, 107, 47);
-            background: #b2d9be;
-            
-        }
-
-        h1 {
-            text-align: center;
-            margin: 0 0 30px 0;
-        }
-
-
-
-        .gallery {
-            display: grid;
-
-            /* Automatically adjusts columns */
-            grid-template-columns:
-                repeat(auto-fit, minmax(220px, 1fr));
-
-            gap: 18px;
-
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-
-
-        .photo {
-            background: darkolivegreen;
-            padding: 6px;
-            border-radius: 8px;
-
-            cursor: pointer;
-
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-
-            transition:
-                transform 0.2s ease,
-                box-shadow 0.2s ease;
-        }
-
-
-        .photo img {
-            width: 100%;
-            height: auto;
-
-            display: block;
-
-            border-radius: 5px;
-        }
-
-
-        /* Slight effect when hovering over a photograph */
-
-        .photo:hover {
-            transform: scale(1.02);
-
-            box-shadow:
-                0 5px 15px rgba(0, 0, 0, 0.25);
-        }
-
-
-        .lightbox {
-            display: none;
-
-            position: fixed;
-
-            z-index: 1000;
-
-            left: 0;
-            top: 0;
-
-            width: 100%;
-            height: 100%;
-
-            background: rgba(0, 0, 0, 0.92);
-
-            align-items: center;
-            justify-content: center;
-        }
-
-        .lightbox-image {
-            max-width: 90%;
-            max-height: 90vh;
-
-            width: auto;
-            height: auto;
-
-            object-fit: contain;
-
-            border-radius: 4px;
-
-            box-shadow:
-                0 0 30px rgba(0, 0, 0, 0.5);
-        }
-
-
-        .close {
-            position: absolute;
-
-            top: 20px;
-            right: 35px;
-
-            color: white;
-
-            font-size: 45px;
-            font-weight: bold;
-
-            cursor: pointer;
-
-            line-height: 1;
-
-            z-index: 1002;
-        }
-
-        .close:hover {
-            color: #ccc;
-        }
-
-
-
-        .prev,
-        .next {
-            position: absolute;
-
-            top: 50%;
-
-            transform: translateY(-50%);
-
-            color: white;
-
-            font-size: 45px;
-
-            font-weight: bold;
-
-            cursor: pointer;
-
-            padding: 20px;
-
-            user-select: none;
-
-            z-index: 1002;
-        }
-
-
-        .prev {
-            left: 10px;
-        }
-
-
-        .next {
-            right: 10px;
-        }
-
-
-        .prev:hover,
-        .next:hover {
-            color: #ccc;
-        }
-
-        .photo-number {
-            position: absolute;
-
-            bottom: 15px;
-
-            left: 50%;
-
-            transform: translateX(-50%);
-
-            color: white;
-
-            font-size: 16px;
-
-            background: rgba(0, 0, 0, 0.5);
-
-            padding: 6px 12px;
-
-            border-radius: 20px;
-        }
-
-
-        @media (max-width: 600px) {
-
-            body {
-                padding: 10px;
-            }
-
-            h1 {
-                font-size: 24px;
-                margin-bottom: 20px;
-            }
-
-            .gallery {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 8px;
-            }
-
-            .photo {
-                padding: 3px;
-                border-radius: 5px;
-            }
-
-            .photo img {
-                border-radius: 3px;
-            }
-
-            .prev,
-            .next {
-                font-size: 35px;
-                padding: 10px;
-            }
-
-            .close {
-                top: 15px;
-                right: 20px;
-                font-size: 35px;
-            }
-
-            .lightbox-image {
-                max-width: 94%;
-                max-height: 85vh;
-            }
-        }
-
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Parkrun A to Z</title>
+<style>
+  body { margin: 0; font-family: Arial, sans-serif; background: #f4f4f4; }
+  header { background: #2b2b6b; color: white; padding: 20px; text-align: center; height: 50px; }
+  header h1 { margin: 0; line-height: 50px; }
+  nav { position: fixed; top: 90px; left: 0; width: 50px; bottom: 0; background: #ffa300; overflow-y: auto; text-align: center; }
+  nav a { display: block; padding: 6px 0; color: #2b2b6b; font-weight: bold; text-decoration: none; }
+  nav a:hover { background: #2b2b6b; color: white; }
+  main { margin-left: 70px; padding: 20px; }
+  section { background: white; border-radius: 8px; padding: 15px; margin-bottom: 20px; scroll-margin-top: 100px; }
+  section h2 { margin-top: 0; color: #2b2b6b; border-bottom: 3px solid #ffa300; }
+  .gallery { display: flex; flex-wrap: wrap; gap: 15px; }
+  figure { margin: 0; width: 220px; }
+  figure img { width: 100%; height: 160px; object-fit: cover; border-radius: 6px; background: #ddd; cursor: pointer; }
+  figcaption { text-align: center; padding-top: 5px; font-size: 14px; }
+  .empty { color: #888; font-style: italic; }
+  #lightbox { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 10; }
+  #lightbox img { max-width: 90%; max-height: 90%; border-radius: 6px; }
+</style>
 </head>
-
-
 <body>
 
+<header><h1>My Parkrun A to Z</h1></header>
+<nav id="nav"></nav>
+<main id="main"></main>
+<div id="lightbox" onclick="this.style.display='none'"><img id="big" alt=""></div>
 
-    <h1>parkrun A-Z</h1>
-
-
-      
-    <div class="gallery">
-
-        <div class="photo">
-            <img src="./1.JPG" alt="Photo 1">
-        </div>
-
-        <div class="photo">
-             <img src="./2.jpg" alt="Photo 2">
-        </div>
-
-        <div class="photo">
-            <img src="./3.jpg" alt="Photo 3">
-        </div>
-
-        <div class="photo">
-            <img src="./4.jpg" alt="Photo 4">
-        </div>
-
-        <div class="photo">
-            <img src="./5.jpg" alt="Photo 5">
-        </div>
-
-        <div class="photo">
-            <img src="./6.jpg" alt="Photo F">
-        </div>
-
-        <div class="photo">
-            <img src="./IMG_2442.jpeg" alt="Photo G">
-        </div>
-
-        <div class="photo">
-            <img src="./8.jpg" alt="Photo 8">
-        </div>
-
-        <div class="photo">
-            <img src="./9.jpg" alt="Photo 9">
-        </div>
-
-        <div class="photo">
-            <img src="./27.jpg" alt="Photo J">
-        </div>
-
-        <div class="photo">
-            <img src="./11.jpg" alt="Photo 11">
-        </div>
-
-        <div class="photo">
-            <img src="./12.jpg" alt="Photo 12">
-        </div>
-
-        <div class="photo">
-            <img src="./13.jpg" alt="Photo 13">
-        </div>
-
-        <div class="photo">
-            <img src="./IMG_0241.jpeg" alt="Photo 14">
-        </div>
-
-        <div class="photo">
-            <img src="./27.jpg" alt="Photo O">
-        </div>
-
-        <div class="photo">
-            <img src="./IMG_2448.jpeg" alt="Photo 16">
-        </div>
-
-        <div class="photo">
-            <img src="./17.jpeg" alt="Photo 17">
-        </div>
-
-        <div class="photo">
-            <img src="./18.jpg" alt="Photo 18">
-        </div>
-
-        <div class="photo">
-            <img src="./IMG_2420.jpeg" alt="Photo 19">
-        </div>
-
-        <div class="photo">
-            <img src="./27.jpg" alt="Photo T">
-        </div>
-
-        <div class="photo">
-            <img src="./27.jpg" alt="Photo U">
-        </div>
-
-        <div class="photo">
-            <img src="./22.jpg" alt="Photo 22">
-        </div>
-
-        <div class="photo">
-            <img src="./23.jpg" alt="Photo 23">
-        </div>
-
-      
-        <div class="photo">
-            <img src="./x.jpg"  " alt="NO X">
-        </div>
-
-        <div class="photo">
-            <img src="./27.jpg" alt="Photo Y">
-        </div>
-
-        <div class="photo">
-            <img src="./26.png" alt="Photo 26">
-        </div>
-
-    </div>
-
-
-   
-
-    <div class="lightbox" id="lightbox">
-
-        <!-- Close button -->
-        <span class="close" id="close">&times;</span>
-
-
-        <!-- Previous button -->
-        <span class="prev" id="prev">&#10094;</span>
-
-
-        <!-- Large photograph -->
-        <img
-            class="lightbox-image"
-            id="lightboxImage"
-            src=""
-            alt=""
-        >
-
-
-        <!-- Next button -->
-        <span class="next" id="next">&#10095;</span>
-
-
-        <!-- Photo number -->
-        <div class="photo-number" id="photoNumber">
-            1 / 26
-        </div>
-
-    </div>
-
-
-
+<script>
+// ============================================================
+// EDIT THIS LIST to add your photos.
+// 1. Put the photo files in a folder called photos next to this page.
+// 2. Under the right letter, add a line:  ["file name.jpg", "Parkrun name"],
+// Keep the commas and quote marks exactly as shown.
+// ============================================================
+const photos = {
+  A: [
+    ["1.jpg", "Alexandra "],
+  ],
+  B: [
+    ["2.jpg", "Birkenhead"],
+    ["barrow.jpg", "Barrow in Furness"],
+    ["Blackpool.jpg", "Blackpool"],
     
-
-    <script>
-
-       
-
-        const photos =
-            document.querySelectorAll('.photo img');
-
-
-
-
-        const lightbox =
-            document.getElementById('lightbox');
-
-        const lightboxImage =
-            document.getElementById('lightboxImage');
-
-        const closeButton =
-            document.getElementById('close');
-
-        const previousButton =
-            document.getElementById('prev');
-
-        const nextButton =
-            document.getElementById('next');
-
-        const photoNumber =
-            document.getElementById('photoNumber');
-
-
-        let currentPhoto = 0;
-
-
-       
-
-        function openLightbox(index) {
-
-            currentPhoto = index;
-
-            showPhoto();
-
-            lightbox.style.display = 'flex';
-
-            /* Prevent the page underneath from scrolling */
-
-            document.body.style.overflow = 'hidden';
-        }
-
-
-        function showPhoto() {
-
-            const photo = photos[currentPhoto];
-
-            lightboxImage.src = photo.src;
-
-            lightboxImage.alt = photo.alt;
-
-            photoNumber.textContent =
-                (currentPhoto + 1) + ' / ' + photos.length;
-        }
-
-
-       
-        function closeLightbox() {
-
-            lightbox.style.display = 'none';
-
-            document.body.style.overflow = '';
-        }
-
-
-     
-
-        function nextPhoto() {
-
-            currentPhoto++;
-
-            /* Go back to first photo */
-
-            if (currentPhoto >= photos.length) {
-                currentPhoto = 0;
-            }
-
-            showPhoto();
-        }
-
-
-        /* ---------------------------------
-           PREVIOUS PHOTO
-           --------------------------------- */
-
-        function previousPhoto() {
-
-            currentPhoto--;
-
-            /* Go to last photo */
-
-            if (currentPhoto < 0) {
-                currentPhoto = photos.length - 1;
-            }
-
-            showPhoto();
-        }
-
-
-        /* ---------------------------------
-           CLICK ON A THUMBNAIL
-           --------------------------------- */
-
-        photos.forEach(function(photo, index) {
-
-            photo.addEventListener('click', function() {
-
-                openLightbox(index);
-
-            });
-
-        });
-
-
-        /* ---------------------------------
-           BUTTONS
-           --------------------------------- */
-
-        closeButton.addEventListener(
-            'click',
-            closeLightbox
-        );
-
-        nextButton.addEventListener(
-            'click',
-            nextPhoto
-        );
-
-        previousButton.addEventListener(
-            'click',
-            previousPhoto
-        );
-
-
-        /* ---------------------------------
-           CLICK OUTSIDE PHOTO TO CLOSE
-           --------------------------------- */
-
-        lightbox.addEventListener(
-            'click',
-            function(event) {
-
-                if (event.target === lightbox) {
-
-                    closeLightbox();
-
-                }
-
-            }
-        );
-
-
-        /* ---------------------------------
-           KEYBOARD CONTROLS
-           --------------------------------- */
-
-        document.addEventListener(
-            'keydown',
-            function(event) {
-
-                /* Only respond when lightbox is open */
-
-                if (lightbox.style.display !== 'flex') {
-                    return;
-                }
-
-
-                /* Right arrow */
-
-                if (event.key === 'ArrowRight') {
-
-                    nextPhoto();
-
-                }
-
-
-                /* Left arrow */
-
-                if (event.key === 'ArrowLeft') {
-
-                    previousPhoto();
-
-                }
-
-
-                /* Escape */
-
-                if (event.key === 'Escape') {
-
-                    closeLightbox();
-
-                }
-
-            }
-        );
-
-    </script>
-
+  ],
+  C: [
+    ["3.jpg", "Clermont, FL"],
+    ["cun.jpg", "Cuningar Loop"],
+  ],
+  D: [
+    ["4.jpg", "Delamere"],
+  ],
+  E: [
+    ["5.jpg", "Edgbaston"],
+  ],
+  F: [
+    ["6.jpg", "Fell Foot"],
+  ],
+  G: [
+    ["7.jpeg", "Greenfield Valley"]
+  ],
+  H: [
+    ["8.jpg", "Holyrood"],
+    ["haigh.jpg", "Haigh Woodland"],
+  ],
+  I: [
+    ["9.jpg", "Isabel Trail"],
+  ],
+  J: [],
+  K: [
+    ["11.jpg", "Keswick"],
+  ],
+  L: [
+    ["12.jpg", "Lancaster"],
+    ["lytham.jpg", "Lytham Hall"],
+    ["Lews.jpeg", "Lews Castle"],
+  ],
+  M: [
+    ["13.jpg", "Malahide, IRL"],
+   ["IMG_0428.jpg", "Morecambe"], 
+  ],
+  N: [
+    ["14.jpg", "Nobles, IOM"],
+    
+  ],
+  O: [],
+  P: [
+    ["16.jpg", "Penrith"],
+    ["IMG_4096.JPG", "Princes"],
+    ["IMG_0432.JPG", "Preston"],
+  ],
+  Q: [
+    ["17.jpeg", "Queens, Glasgow"],
+  ],
+  R: [
+    ["18.jpg", "Rothay"],
+  ],
+  S: [
+    ["sou.jpeg", "Southampton" ],
+    ["strat.jpg", "Starford-Upon-Avon"],
+    ["sp.jpg", "Southport"],
+
+  ],
+  T: [],
+  U: [],
+  V: [
+    ["22.jpg", "Victoria, Glasgow"],
+  ],
+  W: [
+    ["23.jpg", "Worsley Woods"],
+    ["IMG_0295.jpg", "Whinlatter Forest"],
+    ["word.JPG", "Worden"],
+    ["wit.jpg", "Witton"],
+  ],
+  X: [
+    ["x.jpg"]
+  ],
+  Y: [],
+  Z: [
+    ["zuid.jpg", "Zuiderpark, Netherlands"]
+  ]
+};
+// ============================================================
+
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+const nav = document.getElementById("nav");
+const main = document.getElementById("main");
+
+letters.forEach(L => {
+  const a = document.createElement("a");
+  a.href = "#" + L;
+  a.textContent = L;
+  nav.appendChild(a);
+
+  const sec = document.createElement("section");
+  sec.id = L;
+  sec.innerHTML = "<h2>" + L + "</h2>";
+  const gallery = document.createElement("div");
+  gallery.className = "gallery";
+
+  const list = photos[L] || [];
+  if (list.length === 0) {
+    gallery.innerHTML = '<p class="empty">No photos yet</p>';
+  }
+  list.forEach(([file, name]) => {
+    const fig = document.createElement("figure");
+    const img = document.createElement("img");
+    img.src = "photos/" + file;
+    img.alt = name;
+    img.loading = "lazy";
+    img.onclick = () => {
+      document.getElementById("big").src = img.src;
+      document.getElementById("lightbox").style.display = "flex";
+    };
+    const cap = document.createElement("figcaption");
+    cap.textContent = name;
+    fig.append(img, cap);
+    gallery.appendChild(fig);
+  });
+
+  sec.appendChild(gallery);
+  main.appendChild(sec);
+});
+</script>
 </body>
-
 </html>
-```

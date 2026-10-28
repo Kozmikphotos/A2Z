@@ -149,7 +149,7 @@ letters.forEach(L => {
   list.forEach(([file, name]) => {
     const fig = document.createElement("figure");
     const img = document.createElement("img");
-    img.src = "photos/" + file;
+    img.src = file;
     img.alt = name;
     img.loading = "lazy";
     img.onclick = () => {
